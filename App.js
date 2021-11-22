@@ -1,16 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, Button } from 'react-native';
+import {Text, View, TouchableHighlight } from 'react-native';
+
+import styles from './App.style';
+import Button from './components/Button.js';
 
 export default function App() {
   const[all, setAll] = useState(0);
   const[car, setCar] = useState(0);
   const[truck, setTruck] = useState(0);
+  const[pedestrian, setPedestrian] = useState(0);
 
   function handleDelButton(){
     setAll(0);
     setCar(0);
     setTruck(0);
+    setPedestrian(0);
   }
   function handleCarButton(){
     setCar(car+1);
@@ -20,6 +25,11 @@ export default function App() {
     setTruck(truck+1);
     setAll(all+1);
   }
+  function handlePedestrianButton(){
+    setPedestrian(pedestrian+1);
+    setAll(all+1);
+  }
+
   return (
     <View style={styles.container}>
       <Text>Forgalom számláló</Text>
@@ -33,47 +43,16 @@ export default function App() {
       <Text style={styles.sumText}>Összes: {all}</Text>
 
       <Text>{car}</Text>
-      <TouchableHighlight
-          style={styles.runButton}
-          onPress={handleCarButton}
-          >
-          <Text style={styles.runText}>Személy</Text>
-      </TouchableHighlight>
+      <Button title="Személygépjármű" onPress={handleCarButton}/>
 
       <Text>{truck}</Text>
-      <TouchableHighlight
-          style={styles.runButton}
-          onPress={handleTruckButton}
-          >
-          <Text style={styles.runText}>Teher</Text>
-      </TouchableHighlight>
+      <Button title="Tehergépjármű" onPress={handleTruckButton} />
+
+      <Text>{pedestrian}</Text>
+      <Button title="Gyalogos" onPress={handlePedestrianButton} />
 
       <StatusBar style="auto" />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  runButton: {
-    backgroundColor: 'blue',
-    marginTop: 10,
-    marginBottom: 70,
-    padding: 10,
-    borderRadius: 10,
-  },
-  runText: {
-    color: 'white',
-    paddingLeft: 10,
-    paddingRight: 10,
-    fontSize: 22,
-  },
-  sumText: {
-    marginBottom: 70,
-  }
-});
